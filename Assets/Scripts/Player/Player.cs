@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     public int health { get { return currentHealth; } }
     int currentHealth;
 
-    public int bullet { get { return currentHealth; } }
+    public int bullet { get { return currentBullet; } }
     int currentBullet;
 
     bool isInvincible;
