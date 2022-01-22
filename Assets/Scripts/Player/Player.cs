@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
-{
+{ 
     //Player Stats
-    public float speed = 1f;
-    public int maxHealth = 5;
-    public int coin;
-    public float timeInvincible = 1.0f;
-    public GameObject bulletPrefab;
-    public float shootingCooldown;
+    public float speed;
+    public int maxHealth;
+    public int money;
+    public float attackSpeed;
     public int maxBullets;
+
+    
+    [SerializeField] GameObject bulletPrefab, aniReloading;
+    [SerializeField] SFXManager sfx;
+    
+    //Flash
+    [SerializeField] Material flashMaterial;
+    Material originalMaterial;
+    SpriteRenderer sr;
+    Coroutine flashRoutine;
 
 
     float bulletForce = 6f;
@@ -21,49 +29,78 @@ public class Player : MonoBehaviour
     public int bullet { get { return currentBullet; } }
     int currentBullet;
 
+    //invincile
+    float timeInvincible;
     bool isInvincible;
-    float invincibleTimer;
 
-
+    //Animator
     Animator animator;
     Vector2 lookDirection = new Vector2(1, 0);
     Vector3 mouse_pos;
     Vector3 object_pos;
     bool isShooting;
-
+    
+    //Moving
     Rigidbody2D rbPlayer;
     float horizontal;
     float vertical;
 
 
-    float timer;
-    float timerShoot;
+    //Timer 
+    float attackTimer;
+    float timerAnimationShoot;
+    float invincibleTimer;
+    float reloadTimer;
+    bool isReloading;
+
+    //Stop player attack when in safe zone
+    bool isOnSafeZone;
+    GameObject SafeZoneCondition;
 
 
     void Start()
     {
+        LoadStats();
         rbPlayer = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
-        timer = Time.time;
+        sr = GetComponent<SpriteRenderer>();
+        originalMaterial = sr.material;
+
+        attackTimer = Time.time;
+        reloadTimer = 0;
+
+        timeInvincible = 1.5f;
 
         currentBullet = maxBullets;
         currentHealth = maxHealth;
+
+        SafeZoneCondition = GameObject.Find("NPC");
+
+        isReloading = false;
     }
+
 
 
     void Update()
     {
+        if (SafeZoneCondition != null)
+        {
+            isOnSafeZone = true;
+        }
+        //Moving
         vertical = Input.GetAxis("Vertical");
         horizontal = Input.GetAxis("Horizontal");
         Vector2 move = new Vector2(horizontal, vertical);
 
+        //Looking at mouse
         mouse_pos = Input.mousePosition;
         object_pos = Camera.main.WorldToScreenPoint(transform.position);
         mouse_pos.x = mouse_pos.x - object_pos.x;
         mouse_pos.y = mouse_pos.y - object_pos.y;
         Vector3 looking = new Vector3(mouse_pos.x, mouse_pos.y, 0);
 
+        //Animation
         if (!Mathf.Approximately(looking.x, 0.0f) || !Mathf.Approximately(looking.y, 0.0f))
         {
             lookDirection.Set(looking.x, looking.y);
@@ -74,10 +111,11 @@ public class Player : MonoBehaviour
         animator.SetFloat("Speed", move.magnitude);
         animator.SetBool("isShooting", isShooting);
 
-        timerShoot -= 1;
+
+        timerAnimationShoot -= 1;
         if (isShooting)
         {
-            if (timerShoot < 0)
+            if (timerAnimationShoot < 0)
             {
                 isShooting = false;
             }
@@ -92,24 +130,31 @@ public class Player : MonoBehaviour
         }
 
         //Shoot
-        timer += Time.deltaTime;
-        if (timer >= shootingCooldown && currentBullet > 0)
+        attackTimer += Time.deltaTime;
+        if (attackTimer >= attackSpeed && currentBullet > 0)
         {
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Fire1") && isOnSafeZone == false && isReloading == false)
             {
                 Shoot();
-                timer = 0;
+                attackTimer = 0;
             }
         }
 
         //Reload
-        if (currentBullet == 0)
+        reloadTimer += Time.deltaTime;
+        if (currentBullet < maxBullets && isReloading == false)
         {
             if (Input.GetKeyDown("r"))
-                ChangeBullet(maxBullets);
+            {
+                Reload();
+                reloadTimer = 0;
+                isReloading = true;
+            }
         }
-
-
+        if (reloadTimer > 1f)
+        {
+            isReloading = false;
+        }
 
     }
     void FixedUpdate()
@@ -120,12 +165,43 @@ public class Player : MonoBehaviour
         rbPlayer.MovePosition(position);
     }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy" && currentHealth > 0)
+        {
+            ChangeHealth(-1);
+        }
+
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Collectible")
+        {
+            sfx.PlaySound("pickup");
+            money += 10;
+        }
+        if (collision.gameObject.layer == 11 && currentHealth > 0)
+        {
+            ChangeHealth(-1);
+        }
+    }
+
+
+
     public void ChangeHealth(int amount)
     {
         if (amount < 0)
         {
             if (isInvincible)
                 return;
+            else
+            {
+                Flash();
+                sfx.PlaySound("damaged");
+            } 
+                
 
             isInvincible = true;
             invincibleTimer = timeInvincible;
@@ -136,9 +212,13 @@ public class Player : MonoBehaviour
 
     void Shoot()
     {
-        timerShoot = 10f;
-        isShooting = true;
+        sfx.PlaySound("shoot");
+        timerAnimationShoot = 10f; //10 frames to keep animation
+        isShooting = true; 
+
         ChangeBullet(-1);
+
+        //Create bullet and force bullet
         GameObject bullet = Instantiate(bulletPrefab, rbPlayer.transform);
         Rigidbody2D rbBullet = bullet.GetComponent<Rigidbody2D>();
         rbBullet.AddForce(lookDirection * bulletForce, ForceMode2D.Impulse);
@@ -148,184 +228,47 @@ public class Player : MonoBehaviour
     {
         currentBullet = Mathf.Clamp(currentBullet + amout, 0, maxBullets);
     }
-    
+
+
+    void Reload ()
+    {
+        Destroy(Instantiate(aniReloading, new Vector2(transform.position.x, transform.position.y + 0.2f), transform.rotation), 1f);
+        sfx.PlaySound("reload");
+        ChangeBullet(maxBullets);
+    }
+
+    IEnumerator FlashRoutine()
+    {
+        sr.material = flashMaterial;
+        yield return new WaitForSeconds(0.1f);
+        sr.material = originalMaterial;
+        flashRoutine = null;
+    }
+
+    void Flash()
+    {
+        if (flashRoutine != null)
+        {
+            StopCoroutine(flashRoutine);
+        }
+        flashRoutine = StartCoroutine(FlashRoutine());
+    }
+
+    public void SaveStats()
+    {
+        PlayerPrefs.SetFloat("speed", speed);
+        PlayerPrefs.SetInt("maxHealth", maxHealth);
+        PlayerPrefs.SetInt("money", money);
+        PlayerPrefs.SetFloat("attackSpeed", attackSpeed);
+        PlayerPrefs.SetInt("maxBullets", maxBullets);
+    }
+
+    public void LoadStats()
+    {
+        speed = PlayerPrefs.GetFloat("speed");
+        maxHealth = PlayerPrefs.GetInt("maxHealth");
+        money = PlayerPrefs.GetInt("money");
+        attackSpeed = PlayerPrefs.GetFloat("attackSpeed");
+        maxBullets = PlayerPrefs.GetInt("maxBullets");
+    }
 }
-
-/*player temp
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Player : MonoBehaviour
-{
-
-    public float speed = 1f;
-    public int maxHealth = 5;
-    public int coin;
-    public float timeInvincible = 1.0f;
-    public GameObject bulletPrefab;
-    public float shootingCooldown;
-    public float bulletForce;
-    public int maxBullets;
-
-    
-
-    public int health { get { return currentHealth; } }
-    int currentHealth;
-
-    public int bullet { get { return currentBullet; } }
-    int currentBullet;
-
-    bool isInvincible;
-    float invincibleTimer;
-
-
-    Animator animator;
-    Vector2 lookDirection = new Vector2(1, 0);
-    public bool isShooting;
-
-    Rigidbody2D rbPlayer;
-    float horizontal;
-    float vertical;
-
-    float timer;
-    
-    void Start()
-    {
-        rbPlayer = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-
-        timer = Time.time;
-
-        currentBullet = maxBullets;
-        currentHealth = maxHealth;
-    }
-
-    
-    void Update()
-    {
-        vertical = Input.GetAxis("Vertical");
-        horizontal = Input.GetAxis("Horizontal");
-
-
-        Vector2 move = new Vector2(horizontal, vertical);
-        if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f) )
-        {
-            lookDirection.Set(move.x, move.y);
-            lookDirection.Normalize();
-        }
-            animator.SetFloat("Move X", lookDirection.x);
-            animator.SetFloat("Move Y", lookDirection.y);
-            animator.SetFloat("Speed", move.magnitude);
-            animator.SetBool("isShooting", isShooting);
-
-
-        //Invincible when takes time
-        if (isInvincible)
-        {
-            invincibleTimer -= Time.deltaTime;
-            if (invincibleTimer < 0)
-                isInvincible = false;
-        }
-        //Shoot
-        timer += Time.deltaTime;
-        if (timer >= shootingCooldown && currentBullet > 0)
-        {
-            if (Input.GetKeyDown("up"))
-            {
-                animator.SetFloat("Move X", 0);
-                animator.SetFloat("Move Y", 1);
-                Shoot(1);
-                timer = 0;
-            }
-            if (Input.GetKeyDown("down"))
-            {
-                animator.SetFloat("Move X", 0);
-                animator.SetFloat("Move Y", -1);
-                Shoot(2);
-                timer = 0;
-            }
-            if (Input.GetKeyDown("left"))
-            {
-                animator.SetFloat("Move X", -1);
-                animator.SetFloat("Move Y", 0);
-                Shoot(3);
-                timer = 0;
-            }
-            if (Input.GetKeyDown("right"))
-            {
-                animator.SetFloat("Move X", 1);
-                animator.SetFloat("Move Y", 0);
-                Shoot(4);
-                timer = 0;
-            }
-        }
-
-            
-
-        //Reload
-        if (currentBullet == 0)
-        {
-            if (Input.GetKeyDown("r"))
-                ChangeBullet(maxBullets);
-        }
-
-
-    }
-    void FixedUpdate()
-    {
-        isShooting = false;
-        Vector2 position = transform.position;
-        position.x = position.x + speed * horizontal  * Time.deltaTime;
-        position.y = position.y + speed * vertical * Time.deltaTime;
-        rbPlayer.MovePosition(position);
-    }
-
-    public void ChangeHealth(int amount)
-    {
-        if (amount < 0)
-        {
-            if (isInvincible)
-                return;
-
-            isInvincible = true;
-            invincibleTimer = timeInvincible;
-        }
-
-        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-        Debug.Log(currentHealth + "/" + maxHealth);
-    }
-
-    void Shoot(int n)
-    {
-        isShooting = true;
-        ChangeBullet(-1);
-        GameObject bullet = Instantiate(bulletPrefab, rbPlayer.transform);
-        Rigidbody2D rbBullet = bullet.GetComponent<Rigidbody2D>();
-        switch (n)
-        {
-            case 1:
-                rbBullet.AddForce(transform.up * bulletForce, ForceMode2D.Impulse);
-                break;
-            case 2:
-                rbBullet.AddForce(-transform.up * bulletForce, ForceMode2D.Impulse);
-                break;
-            case 3:
-                rbBullet.AddForce(-transform.right * bulletForce, ForceMode2D.Impulse);
-                break;
-            case 4:
-                rbBullet.AddForce(transform.right * bulletForce, ForceMode2D.Impulse);
-                break;
-        }
-    }
-
-    void ChangeBullet(int amout)
-    {
-        currentBullet = Mathf.Clamp(currentBullet + amout, 0, maxBullets);
-        Debug.Log("Bullets" + currentBullet + "/" + maxBullets);
-    }
-
-
-    
-}
-*/

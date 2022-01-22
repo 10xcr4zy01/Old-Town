@@ -104,6 +104,9 @@ TextureImporter:
   - first:
       213: -3010435638452909744
     second: Atlas_157
+  - first:
+      213: -4098169810922336603
+    second: Gras
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -403,7 +406,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Atlas_10
+      name: Box
       rect:
         serializedVersion: 2
         x: 501
@@ -428,9 +431,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 512
-        y: 419
+        y: 421
         width: 192
-        height: 61
+        height: 59
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -487,7 +490,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Atlas_14
+      name: Box16
       rect:
         serializedVersion: 2
         x: 528
@@ -1978,27 +1981,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Atlas_93
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 192
-        width: 16
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5ae8ebe15406027c0800000000000000
-      internalID: -4098169810922336603
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Atlas_94
       rect:
         serializedVersion: 2
@@ -2167,13 +2149,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Atlas_102
+      name: DeadBush
       rect:
         serializedVersion: 2
-        x: 66
-        y: 177
-        width: 13
-        height: 13
+        x: 63
+        y: 176
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2230,13 +2212,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Atlas_105
+      name: Grass
       rect:
         serializedVersion: 2
-        x: 145
-        y: 177
-        width: 14
-        height: 12
+        x: 144
+        y: 175
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2356,13 +2338,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Atlas_111
+      name: Catus2
       rect:
         serializedVersion: 2
-        x: 49
+        x: 48
         y: 160
-        width: 14
-        height: 11
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -3414,7 +3396,7 @@ TextureImporter:
         width: 8
         height: 15
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -3435,7 +3417,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -3456,7 +3438,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -3477,7 +3459,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -3498,7 +3480,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -3519,7 +3501,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -3540,7 +3522,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -3561,7 +3543,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -3582,7 +3564,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -3590,6 +3572,27 @@ TextureImporter:
       bones: []
       spriteID: 2c760da2b928db110800000000000000
       internalID: 1278321472192931778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Gras
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 102
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ae8ebe15406027c0800000000000000
+      internalID: -4098169810922336603
       vertices: []
       indices: 
       edges: []

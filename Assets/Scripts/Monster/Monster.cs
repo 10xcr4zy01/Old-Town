@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Monster : MonoBehaviour
 {
     [SerializeField] private Material flashMaterial;
+    [SerializeField] private GameObject moneyBag;
 
     public float speed = 0.5f;
     public int maxHealth = 3;
@@ -19,6 +20,8 @@ public class Monster : MonoBehaviour
     Material originalMaterial;
     Coroutine flashRoutine;
     Transform target;
+    AudioSource damamgedSFX;
+    
 
     void Start()
     {
@@ -26,6 +29,7 @@ public class Monster : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
         sr = GetComponent<SpriteRenderer>();
         originalMaterial = sr.material;
+        damamgedSFX = GetComponent<AudioSource>();
 
         //GetComponent
         animator = GetComponent<Animator>();
@@ -39,36 +43,42 @@ public class Monster : MonoBehaviour
         
         //Auto chasing player
         transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);      
+
+        //Die
         if (currentHealth == 0)
-        {
+        {         
             speed = 0;
             animator.SetTrigger("die"); 
             Destroy(gameObject, 0.2f);
         }
 
         //Set animation
-
         Vector2 move = target.position - transform.position;
         animator.SetFloat("MoveX", move.normalized.x);
         animator.SetFloat("MoveY", move.normalized.y);
 
     }
 
-
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Player player = collision.gameObject.GetComponent<Player>();
-        if (player != null && currentHealth > 0)
+        if (collision.gameObject.tag == "Weapon")
         {
-            player.ChangeHealth(-1);
+            damamgedSFX.Play();
+            ChangeHealth(-1);
+        }
+
+        if (health == 0)
+        {
+            if (Random.Range(0f, 1f) <= 0.5f)
+            {
+                GameObject moneyBag1 = Instantiate(moneyBag, transform.position, Quaternion.identity);
+            }
         }
     }
-
-    public void ChangeHealth(int amount)
+    private void ChangeHealth(int amount)
     {
         Flash();
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-        Debug.Log(currentHealth + "/" + maxHealth);
     }
 
     IEnumerator FlashRoutine()

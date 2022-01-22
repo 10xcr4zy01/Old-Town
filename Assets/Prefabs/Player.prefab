@@ -175,9 +175,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0.8
   maxHealth: 3
-  coin: 0
-  timeInvincible: 1
-  bulletPrefab: {fileID: 8521362334779930048, guid: 596e021b7dcd60a44b6893495f55efdb, type: 3}
-  shootingCooldown: 1
-  bulletForce: 6
+  money: 100
+  attackSpeed: 1
   maxBullets: 5
+  bulletPrefab: {fileID: 8521362334779930048, guid: 596e021b7dcd60a44b6893495f55efdb, type: 3}
+  aniReloading: {fileID: 6494242125094133114, guid: 728a53d66459b964fb43178655b77532, type: 3}
+  sfx: {fileID: 8650533911178497811, guid: c7c563d9a8a70ef4f846f56fc9ae94a5, type: 3}
+  flashMaterial: {fileID: 2100000, guid: c347b4f840bf97f41904dd3ac101da29, type: 2}

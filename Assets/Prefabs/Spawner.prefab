@@ -95,7 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36bf27bbb18885d47ae27f29ea6e6f7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpawn: 2
+  maxSpawn: 3
+  time: 3
+  firstSpawnTimer: 1
   monsterPrefabs: {fileID: 923473081200904234, guid: aa0965c415ec6394b8d1ed5700dc444b, type: 3}
-  spawner: {fileID: 7129758126621677047}
-  time: 2
+  warning: {fileID: 3928469183854859458, guid: 6d635846d094ffd49b0ef0d8e2c0759f, type: 3}

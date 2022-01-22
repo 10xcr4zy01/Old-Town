@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] Player player;
+
+    private void Awake()
     {
-        
+        player.SaveStats();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

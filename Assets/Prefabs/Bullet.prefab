@@ -145,4 +145,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: {fileID: 706079291043617524, guid: 559b718a45e0c564aaf57c3a02251b14, type: 3}
-  Player: {fileID: 7107356760186763913, guid: 1982bc295c1cf2b4b938885f86e844ce, type: 3}
