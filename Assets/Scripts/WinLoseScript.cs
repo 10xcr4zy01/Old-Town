@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WinLosePause : MonoBehaviour
+public class WinLoseScript : MonoBehaviour
 {
     [SerializeField]
     GameObject
-        winCanvas,
-        loseCanvas,
-        pauseCanvas,
+        winMenu,
+        loseMenu,
         player,
         winCondition;
     float timer;
@@ -20,7 +19,7 @@ public class WinLosePause : MonoBehaviour
 
     private void Update()
     {
-        if (winCanvas.activeSelf == false && loseCanvas.activeSelf == false && pauseCanvas.activeSelf == false)
+        if (winMenu.activeSelf == false && loseMenu.activeSelf == false)
         {
             Time.timeScale = 1f;
         }
@@ -53,15 +52,11 @@ public class WinLosePause : MonoBehaviour
         switch (i)
         {
             case 1:
-                winCanvas.SetActive(true);
+                winMenu.SetActive(true);
                 Pause();
                 break;
             case 2: 
-                loseCanvas.SetActive(true);
-                Pause();
-                break;
-            case 3:
-                pauseCanvas.SetActive(true);
+                loseMenu.SetActive(true);
                 Pause();
                 break;
         }

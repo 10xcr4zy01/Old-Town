@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     public int maxBullets;
 
     
-    [SerializeField] GameObject bulletPrefab, aniReloading;
+    [SerializeField] GameObject bulletPrefab, animationReloading;
     [SerializeField] SFXManager sfx;
     
     //Flash
@@ -55,11 +55,12 @@ public class Player : MonoBehaviour
 
     //Stop player attack when in safe zone
     bool isOnSafeZone;
-    GameObject SafeZoneCondition;
+    GameObject SafeZoneGameObject;
 
 
     void Start()
     {
+        Time.timeScale = 1f; //Reset time scale 
         LoadStats();
         rbPlayer = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -75,7 +76,7 @@ public class Player : MonoBehaviour
         currentBullet = maxBullets;
         currentHealth = maxHealth;
 
-        SafeZoneCondition = GameObject.Find("NPC");
+        SafeZoneGameObject = GameObject.Find("NPC");
 
         isReloading = false;
     }
@@ -84,14 +85,14 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (SafeZoneCondition != null)
+        //Check on save zone
+        if (SafeZoneGameObject != null)
         {
             isOnSafeZone = true;
         }
+
         //Moving
-        vertical = Input.GetAxis("Vertical");
-        horizontal = Input.GetAxis("Horizontal");
-        Vector2 move = new Vector2(horizontal, vertical);
+        
 
         //Looking at mouse
         mouse_pos = Input.mousePosition;
@@ -101,6 +102,7 @@ public class Player : MonoBehaviour
         Vector3 looking = new Vector3(mouse_pos.x, mouse_pos.y, 0);
 
         //Animation
+        Vector2 move = new Vector2(horizontal, vertical);
         if (!Mathf.Approximately(looking.x, 0.0f) || !Mathf.Approximately(looking.y, 0.0f))
         {
             lookDirection.Set(looking.x, looking.y);
@@ -159,6 +161,9 @@ public class Player : MonoBehaviour
     }
     void FixedUpdate()
     {
+        vertical = Input.GetAxis("Vertical");
+        horizontal = Input.GetAxis("Horizontal");
+        
         Vector2 position = transform.position;
         position.x = position.x + speed * horizontal * Time.deltaTime;
         position.y = position.y + speed * vertical * Time.deltaTime;
@@ -232,7 +237,7 @@ public class Player : MonoBehaviour
 
     void Reload ()
     {
-        Destroy(Instantiate(aniReloading, new Vector2(transform.position.x, transform.position.y + 0.2f), transform.rotation), 1f);
+        Destroy(Instantiate(animationReloading, new Vector2(transform.position.x, transform.position.y + 0.2f), transform.rotation), 1f);
         sfx.PlaySound("reload");
         ChangeBullet(maxBullets);
     }
@@ -265,10 +270,30 @@ public class Player : MonoBehaviour
 
     public void LoadStats()
     {
+        InitializePlayerPrefs();
         speed = PlayerPrefs.GetFloat("speed");
         maxHealth = PlayerPrefs.GetInt("maxHealth");
         money = PlayerPrefs.GetInt("money");
         attackSpeed = PlayerPrefs.GetFloat("attackSpeed");
         maxBullets = PlayerPrefs.GetInt("maxBullets");
     }
+
+    void InitializePlayerPrefs()
+    {
+        if (PlayerPrefs.GetFloat("speed") == 0)
+        {
+            PlayerPrefs.SetFloat("speed", 0.9f);
+            PlayerPrefs.SetInt("maxHealth", 3);
+            PlayerPrefs.SetInt("money", 0);
+            PlayerPrefs.SetFloat("attackSpeed", 1.6f);
+            PlayerPrefs.SetInt("maxBullets", 3);
+            PlayerPrefs.SetFloat("cemetery", 9999);
+            PlayerPrefs.SetFloat("coyote", 9999);
+            PlayerPrefs.SetFloat("bankAmount", 0);
+            PlayerPrefs.SetInt("QuestState", 0);
+            PlayerPrefs.SetFloat("volume", 0);
+        }
+
+    }
+
 }

@@ -6,42 +6,29 @@ using UnityEngine.Audio;
 
 public class SettingScript : MonoBehaviour
 {
-    public AudioMixer audioMixer;
+    [SerializeField] AudioMixer mainAudioMixer;
 
-    public Dropdown resolutionDropdown;
-    public Slider volumeSlider;
-    public Toggle fullScreenToggle;
+    [SerializeField] Dropdown resolutionDropdown;
+    [SerializeField] Slider volumeSlider;
+    [SerializeField] Toggle fullScreenToggle;
 
-    public GameObject menuSetting, menuHowToPlay, menuExit;
+    [SerializeField] GameObject menuSetting, menuHowToPlay, menuExit;
 
     Resolution[] resolutions;
     float currentVolume;
-    int currentResolitionIndex;
 
-    private void Awake()
-    {
-        
-    }
     void Start()
     {
+        //Update fullscreen
+        fullScreenToggle.isOn = PlayerPrefs.GetInt("isFullScreen") == 1 ? true : false;
 
-        //Update full screen
-        if (PlayerPrefs.GetInt("isFullScreen") == 1)
-        {
-            
-            fullScreenToggle.isOn = true;
-        }
-        else
-        {
-            fullScreenToggle.isOn = false;
-        }   
+
+        //Update resolution value for dropdown
         resolutions = Screen.resolutions;
         resolutionDropdown.value = PlayerPrefs.GetInt("currentResolitionIndex");
         resolutionDropdown.RefreshShownValue();
     }
 
- 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -51,16 +38,20 @@ public class SettingScript : MonoBehaviour
             CloseMenu(menuExit);
         }
 
-        //Update Audio Mixer
-        audioMixer.GetFloat("volume", out currentVolume);
-        PlayerPrefs.SetFloat("volume", currentVolume);
-        volumeSlider.value = currentVolume;
-
-        
+        UpdateAudioMixerValue();
 
 
     }
 
+    private void UpdateAudioMixerValue ()
+    {
+        mainAudioMixer.GetFloat("volume", out currentVolume);
+        PlayerPrefs.SetFloat("volume", currentVolume);
+        volumeSlider.value = currentVolume;
+    }
+
+
+    //For UI changes
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];
@@ -71,19 +62,13 @@ public class SettingScript : MonoBehaviour
     public void FullScreen (bool isFullScreen)
     {
         Screen.fullScreen = isFullScreen;
-        if (isFullScreen)
-        {
-            PlayerPrefs.SetInt("isFullScreen", 1);
-        }
-        else
-        {
-            PlayerPrefs.SetInt("isFullScreen", 0);
-        }
+        int fullScreenValue = isFullScreen ? 1 : 0;
+        PlayerPrefs.SetInt("isFullScreen", fullScreenValue);
     }
 
     public void SetVolume(float volume)
     {
-        audioMixer.SetFloat("volume", volume);
+        mainAudioMixer.SetFloat("volume", volume);
     }
 
     public void CloseMenu (GameObject menuObject)

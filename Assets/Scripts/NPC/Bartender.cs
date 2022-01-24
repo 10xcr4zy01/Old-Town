@@ -42,7 +42,7 @@ public class Bartender : MonoBehaviour
             switch (statName)
             {
                 case "as":
-                    player.attackSpeed -= 0.4f;
+                    player.attackSpeed -= 0.2f;
                     break;
                 case "ammo":
                     player.maxBullets += 1;
@@ -65,7 +65,7 @@ public class Bartender : MonoBehaviour
     {
         attackSpeed.text = player.attackSpeed.ToString();
         ammo.text = player.maxBullets.ToString();
-        hp.text = player.maxBullets.ToString();
+        hp.text = player.maxHealth.ToString();
     }
 
     void statIsMax ()
@@ -75,12 +75,12 @@ public class Bartender : MonoBehaviour
             btAS.SetActive(false);
         }
         else btAS.SetActive(true);
-        if (player.maxBullets == 9)
+        if (player.maxBullets == 10)
         {
             btAM.SetActive(false);
         }
         else btAM.SetActive(true);
-        if (player.maxHealth == 9)
+        if (player.maxHealth == 10)
         {
             btHP.SetActive(false);
         }

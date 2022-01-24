@@ -535,7 +535,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 200, y: 0}
-  m_SizeDelta: {x: 1000, y: 473}
+  m_SizeDelta: {x: 1000, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6735251484921528052
 CanvasRenderer:
@@ -610,7 +610,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 85}
-  m_SizeDelta: {x: 612.74, y: 104.4}
+  m_SizeDelta: {x: 1000, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8513558053674720224
 CanvasRenderer:
@@ -642,7 +642,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: b19bb39fd8250424ea0a3f4e5c038f9f, type: 3}
-    m_FontSize: 72
+    m_FontSize: 100
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -1206,7 +1206,7 @@ GameObject:
   - component: {fileID: 6580728105418326609}
   - component: {fileID: 5808653891205245990}
   m_Layer: 5
-  m_Name: StatsCanvas
+  m_Name: MainUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1296,7 +1296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d928ff36a8f0f42ba1c10d878608db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 24100000, guid: 0dbcc3fb7cff40445bd9797cefbdfb83, type: 2}
+  mainAudioMixer: {fileID: 24100000, guid: 0dbcc3fb7cff40445bd9797cefbdfb83, type: 2}
   resolutionDropdown: {fileID: 4084890558051732094}
   volumeSlider: {fileID: 4084890557248073252}
   fullScreenToggle: {fileID: 4084890557531091769}

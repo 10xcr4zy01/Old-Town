@@ -60,25 +60,21 @@
     <Compile Include="Assets\Scripts\NPC\Bartender.cs" />
     <Compile Include="Assets\Scripts\NPC\Sheriff.cs" />
     <Compile Include="Assets\Scripts\SFXManager.cs" />
-    <Compile Include="Assets\Scripts\WinLosePause.cs" />
+    <Compile Include="Assets\Scripts\WinLoseScript.cs" />
     <Compile Include="Assets\Scripts\Objects\Spawn.cs" />
     <Compile Include="Assets\Scripts\Player\ReloadingBar.cs" />
     <Compile Include="Assets\Scripts\UI\ButtonClickEvent.cs" />
     <Compile Include="Assets\Scripts\NPC\Banker.cs" />
     <Compile Include="Assets\Scripts\Monster\Coyote.cs" />
-    <Compile Include="Assets\Scripts\PlayerPrefsEditor.cs" />
     <Compile Include="Assets\Scripts\Objects\MoneyBag.cs" />
     <Compile Include="Assets\Scripts\UI\MapSelectRecord.cs" />
     <Compile Include="Assets\Scripts\Timer\ExportTime.cs" />
     <Compile Include="Assets\Scripts\Objects\TriggerTilemap.cs" />
     <Compile Include="Assets\Scripts\Objects\Bullet.cs" />
     <Compile Include="Assets\Scripts\UI\SettingScript.cs" />
-    <Compile Include="Assets\Scripts\ResetTimeScale.cs" />
-    <Compile Include="Assets\Scripts\Saving\SaveManager.cs" />
     <Compile Include="Assets\Scripts\UI\MapSelector.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Player\StatsCount.cs" />
-    <Compile Include="Assets\Scripts\ChangeResolutionOnLoad.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

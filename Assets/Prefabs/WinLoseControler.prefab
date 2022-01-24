@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1120729446141344667}
   - component: {fileID: 6971486292237325683}
   m_Layer: 5
-  m_Name: Time(JustText)
+  m_Name: txtTime(Title)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 4523705087762828601}
   - component: {fileID: 6622447890624238275}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Board
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 4588450662192373311}
   - component: {fileID: 4588450662192373304}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Board
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -264,10 +264,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4588450662259087538}
-  - component: {fileID: 4588450662259087537}
   - component: {fileID: 178357610730950729}
+  - component: {fileID: 5313090135902648899}
   m_Layer: 0
-  m_Name: OpenCanvas
+  m_Name: WinLoseControler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -289,23 +289,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4588450662259087537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4588450662259087539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fbc2fb1b6c0f1c459e04b8ecfce9876, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  winCanvas: {fileID: 4588450662331055443}
-  loseCanvas: {fileID: 4588450663884563301}
-  pauseCanvas: {fileID: 4588450662331055443}
-  player: {fileID: 0}
-  winCondition: {fileID: 0}
 --- !u!82 &178357610730950729
 AudioSource:
   m_ObjectHideFlags: 0
@@ -317,7 +300,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 0dbcc3fb7cff40445bd9797cefbdfb83, type: 2}
   m_audioClip: {fileID: 8300000, guid: 5af2d1aacdf63044b83cce49a7e3a114, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
@@ -402,6 +385,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5313090135902648899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4588450662259087539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fbc2fb1b6c0f1c459e04b8ecfce9876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winMenu: {fileID: 4588450662331055443}
+  loseMenu: {fileID: 4588450663884563301}
+  player: {fileID: 7107356760186763913, guid: 1982bc295c1cf2b4b938885f86e844ce, type: 3}
+  winCondition: {fileID: 0}
 --- !u!1 &4588450662271683715
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,7 +414,7 @@ GameObject:
   - component: {fileID: 4588450662271683712}
   - component: {fileID: 4588450662271683713}
   m_Layer: 5
-  m_Name: TryAgain
+  m_Name: TryAgainButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -549,7 +548,7 @@ GameObject:
   - component: {fileID: 4588450662331055442}
   - component: {fileID: 4588450662331055446}
   m_Layer: 5
-  m_Name: WinCanvas
+  m_Name: WinMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -741,7 +740,7 @@ GameObject:
   - component: {fileID: 4588450662575646793}
   - component: {fileID: 4588450662575646794}
   m_Layer: 5
-  m_Name: BackToTown
+  m_Name: BackToTownButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1030,7 +1029,7 @@ GameObject:
   - component: {fileID: 4588450663722844679}
   - component: {fileID: 4588450663722844672}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1111,7 +1110,7 @@ GameObject:
   - component: {fileID: 4588450663884563307}
   - component: {fileID: 4588450663884563300}
   m_Layer: 5
-  m_Name: LoseCanvas
+  m_Name: LoseMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1435,7 +1434,7 @@ GameObject:
   - component: {fileID: 1929011144762569292}
   - component: {fileID: 3497457354522618913}
   m_Layer: 5
-  m_Name: Timer
+  m_Name: txtTimeClear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ButtonClickEvent : MonoBehaviour
 {
@@ -36,6 +37,20 @@ public class ButtonClickEvent : MonoBehaviour
     {
         click.Play();
         menuObject.SetActive(false);
+    }
+
+    public void ClearData (GameObject menu)
+    {
+        PlayerPrefs.DeleteAll();
+        menu.SetActive(false);
+       
+    }
+
+    public void SetSettingDefault (Dropdown resolutionDropdown)
+    {
+        int fullScreenValue = Screen.fullScreen ? 1 : 0;
+        PlayerPrefs.SetInt("isFullScreen", fullScreenValue);
+        PlayerPrefs.SetInt("currentResolitionIndex", resolutionDropdown.value);
     }
 
 }
