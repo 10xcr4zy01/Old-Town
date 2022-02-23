@@ -63,7 +63,7 @@ public class Bartender : MonoBehaviour
 
     public void UpdatePlayerStat ()
     {
-        attackSpeed.text = player.attackSpeed.ToString();
+        attackSpeed.text = System.Math.Round(player.attackSpeed, 1).ToString();
         ammo.text = player.maxBullets.ToString();
         hp.text = player.maxHealth.ToString();
     }

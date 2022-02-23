@@ -10,6 +10,7 @@ TagManager:
   - UI
   - Collectible
   - NPC
+  - Cheat
   layers:
   - Default
   - TransparentFX

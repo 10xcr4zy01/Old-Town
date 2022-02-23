@@ -108,7 +108,7 @@ public class Coyote : MonoBehaviour
             shootTimer += 0.2f;
             GameObject bullet = Instantiate(coyoteBullet, rg2d.transform.position, Quaternion.identity);
             Rigidbody2D rbBullet = bullet.GetComponent<Rigidbody2D>();
-            rbBullet.AddForce(-transform.right * 0.6f, ForceMode2D.Impulse);
+            rbBullet.AddForce(-transform.right * 0.8f, ForceMode2D.Impulse);
         }
 
         Vector2 position = rg2d.position;

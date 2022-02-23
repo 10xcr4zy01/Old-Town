@@ -12,6 +12,6 @@ public class ReloadingBar : MonoBehaviour
     }
     void Update()
     {
-        transform.position = Vector2.MoveTowards(transform.position, new Vector2 (target.position.x, target.position.y+0.2f), 1f * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, new Vector2 (target.position.x, target.position.y+0.2f), 1.5f * Time.deltaTime);
     }
 }

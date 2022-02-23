@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SFXManager : MonoBehaviour
 {
-    public AudioSource shoot, reload, damaged, pickup;
+    public AudioSource shoot, reload, damaged, pickup, outofammo;
 
     public void PlaySound (string nameSound)
     {
@@ -22,6 +22,9 @@ public class SFXManager : MonoBehaviour
             case "pickup":
                 pickup.Play(); 
                 break ;
+            case "outofammo":
+                outofammo.Play();
+                break;
 
         }
     }

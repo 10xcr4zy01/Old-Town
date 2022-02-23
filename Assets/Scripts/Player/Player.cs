@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
     //invincile
     float timeInvincible;
     bool isInvincible;
+    bool isFade;
+    float fadeTimer;
 
     //Animator
     Animator animator;
@@ -58,8 +60,12 @@ public class Player : MonoBehaviour
     GameObject SafeZoneGameObject;
 
 
+    
+
+
     void Start()
     {
+        fadeTimer = 0f;
         Time.timeScale = 1f; //Reset time scale 
         LoadStats();
         rbPlayer = GetComponent<Rigidbody2D>();
@@ -126,21 +132,48 @@ public class Player : MonoBehaviour
         //Invincible when takes damage
         if (isInvincible)
         {
+
             invincibleTimer -= Time.deltaTime;
+            if (fadeTimer < Time.time)
+            {
+                sr.color = new Color(1f, 1f, 1f, .1f);
+                fadeTimer = Time.time + 0.3f;
+            }
+            else if (fadeTimer > Time.time)
+            {
+                sr.color = Color.white;
+            }
+
             if (invincibleTimer < 0)
                 isInvincible = false;
+        }
+        else
+        {
+            sr.color = Color.white;
         }
 
         //Shoot
         attackTimer += Time.deltaTime;
-        if (attackTimer >= attackSpeed && currentBullet > 0)
+        if (attackTimer >= attackSpeed)
         {
-            if (Input.GetButtonDown("Fire1") && isOnSafeZone == false && isReloading == false)
+            if (currentBullet > 0)
             {
-                Shoot();
-                attackTimer = 0;
+                if (Input.GetButtonDown("Fire1") && isOnSafeZone == false && isReloading == false)
+                {
+                    Shoot();
+                    attackTimer = 0;
+                }
+            }
+            else
+            {
+                if (Input.GetButtonDown("Fire1") && isOnSafeZone == false && isReloading == false)
+                {
+                    sfx.PlaySound("outofammo");
+                    attackTimer = 1.2f;
+                }  
             }
         }
+
 
         //Reload
         reloadTimer += Time.deltaTime;
@@ -176,7 +209,11 @@ public class Player : MonoBehaviour
         {
             ChangeHealth(-1);
         }
-
+        if (collision.gameObject.tag == "Cheat")
+        {
+            if (Input.GetKeyDown("p"))
+                CheatCatus();
+        }
 
     }
 
@@ -191,6 +228,7 @@ public class Player : MonoBehaviour
         {
             ChangeHealth(-1);
         }
+        
     }
 
 
@@ -295,5 +333,11 @@ public class Player : MonoBehaviour
         }
 
     }
+
+    void CheatCatus ()
+    {
+        this.money += 9999;
+    }
+
 
 }

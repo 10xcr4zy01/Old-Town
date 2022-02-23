@@ -7,6 +7,11 @@ using UnityEngine.UI;
 public class ButtonClickEvent : MonoBehaviour
 {
     public AudioSource click;
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.Save();
+    }
     public void Exits ()
     {
         click.Play();

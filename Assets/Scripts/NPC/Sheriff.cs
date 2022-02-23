@@ -41,69 +41,27 @@ public class Sheriff : MonoBehaviour
         {
             case 0:
                 txtAbout.text = "Clear map Cemetery!";
-                if (PlayerPrefs.GetFloat("cemetery") < 9998)
-                {
-                    btnClaim.GetComponent<Button>().interactable = true;
-                }
-                else
-                {
-                    btnClaim.GetComponent<Button>().interactable = false;
-                }
+                btnClaim.GetComponent<Button>().interactable = PlayerPrefs.GetFloat("cemetery") < 9998 ? true : false;
                 break;
             case 1:
-                txtAbout.text = "Clear map Cemetery less than 180s!";
-                if (PlayerPrefs.GetFloat("cemetery") < 180)
-                {
-                    btnClaim.GetComponent<Button>().interactable = true;
-                }
-                else
-                {
-                    btnClaim.GetComponent<Button>().interactable = false;
-                }
+                txtAbout.text = "Defeat Coyote!";
+                btnClaim.GetComponent<Button>().interactable = PlayerPrefs.GetFloat("coyote") < 9998 ? true : false;
                 break;
             case 2:
-                txtAbout.text = "Clear map Cemetery less than 100s!";
-                if (PlayerPrefs.GetFloat("cemetery") < 100)
-                {
-                    btnClaim.GetComponent<Button>().interactable = true;
-                }
-                else
-                {
-                    btnClaim.GetComponent<Button>().interactable = false;
-                }
+                txtAbout.text = "Clear map Cemetery less than 2 minutes!";
+                btnClaim.GetComponent<Button>().interactable = PlayerPrefs.GetFloat("cemetery") < 120 ? true : false;
                 break;
             case 3:
-                txtAbout.text = "Defeat Coyote!";
-                if (PlayerPrefs.GetFloat("coyote") < 9998)
-                {
-                    btnClaim.GetComponent<Button>().interactable = true;
-                }
-                else
-                {
-                    btnClaim.GetComponent<Button>().interactable = false;
-                }
+                txtAbout.text = "Defeat Coyote less than 2 minutes!";
+                btnClaim.GetComponent<Button>().interactable = PlayerPrefs.GetFloat("coyote") < 9998 ? true : false;
                 break;
             case 4:
-                txtAbout.text = "Defeat Coyote less than 180s";
-                if (PlayerPrefs.GetFloat("coyote") < 180)
-                {
-                    btnClaim.GetComponent<Button>().interactable = true;
-                }
-                else
-                {
-                    btnClaim.GetComponent<Button>().interactable = false;
-                }
+                txtAbout.text = "Clear map Cemetery less than 50 second!";
+                btnClaim.GetComponent<Button>().interactable = PlayerPrefs.GetFloat("cemetery") < 50 ? true : false;
                 break;
             case 5:
-                txtAbout.text = "Defeat Coyote less than 100s";
-                if (PlayerPrefs.GetFloat("coyote") < 100)
-                {
-                    btnClaim.GetComponent<Button>().interactable = true;
-                }
-                else
-                {
-                    btnClaim.GetComponent<Button>().interactable = false;
-                }
+                txtAbout.text = "Defeat Coyote less than 1 minute !";
+                btnClaim.GetComponent<Button>().interactable = PlayerPrefs.GetFloat("coyote") < 60 ? true : false;
                 break;
             case 6:
                 txtAbout.text = "You have completed all the quests";
